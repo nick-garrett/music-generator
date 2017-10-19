@@ -4,4 +4,8 @@ Rails.application.routes.draw do
   root to: redirect('midi#show')
 
   get '/midi', to: 'midi#show'
+  
+  post '/midi/play', to: 'midi#play'
+  
+  post '/midi/record', to: 'midi#record'
 end
