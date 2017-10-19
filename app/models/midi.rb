@@ -1,7 +1,7 @@
 class Midi < ApplicationRecord
   require 'unimidi'
 
-  attr_reader :input, :output, :recording
+  attr_reader :input, :output
 
   def initialize
     input!
@@ -11,21 +11,15 @@ class Midi < ApplicationRecord
   def record(record_time)
     input.clear_buffer
     sleep(record_time)
-    @recording = input.gets
+    input.gets
   end
 
-  def play_recording
+  def play_recording(recording)
     recording.size.times do |i|
       output.puts(recording[i][:data])
       break unless i + 1 < recording.size
       sleep_time = (recording[i + 1][:timestamp] - recording[i][:timestamp])
       sleep(sleep_time)
-    end
-  end
-
-  def loop
-    while true
-      play_recording
     end
   end
 
